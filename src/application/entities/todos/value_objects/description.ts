@@ -6,7 +6,7 @@ export class Description {
 
     constructor(description: string){
 
-        if( this.validateDescriptionLenght(description) ){
+        if( !this.validateDescriptionLenght(description) ){
 
             throw new Error('The description must have a maximum of 5000 characters');
 
@@ -25,7 +25,7 @@ export class Description {
     private validateDescriptionLenght(description: string){
 
         return (
-            description.length > 5000
+            description.length >= 0 && description.length <= 5000
         )
 
     }

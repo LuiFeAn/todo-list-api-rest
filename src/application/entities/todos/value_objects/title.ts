@@ -6,7 +6,7 @@ export class Title {
 
     constructor(title: string){
 
-        if( this.validateTitleLenght(title) ){
+        if( !this.validateTitleLenght(title) ){
 
             throw new Error('The title must have a maximum of 100 characters');
 
@@ -25,7 +25,7 @@ export class Title {
     private validateTitleLenght(description: string){
 
         return (
-            description.length > 100
+            description.length >= 0 && description.length <= 500
         )
 
     }

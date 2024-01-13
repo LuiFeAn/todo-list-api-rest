@@ -1,5 +1,5 @@
 import { RegisterUser } from "./register-user";
-import { InMemoryUsersRepository } from "../../../tests/repositories/in-memory-users-repository";
+import { InMemoryUsersRepository } from "../../../../tests/repositories/in-memory-users-repository";
 
 describe('User register tests', () => {
 

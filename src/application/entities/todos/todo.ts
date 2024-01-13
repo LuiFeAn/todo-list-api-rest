@@ -1,7 +1,8 @@
 import { randomUUID } from "crypto";
-import { ITodo } from "./interfaces";
+import { ITodo, PriorityType } from "./interfaces";
 import { Description } from "./value_objects/description";
 import { Title } from "./value_objects/title";
+import { MustBeCompletedIn } from "./value_objects/must_be_completed_in";
 import { Replace } from "src/helpers/replace";
 
 export class Todo {
@@ -63,7 +64,7 @@ export class Todo {
 
     }
 
-    set priority(priority: "High" | "Medium" | "Low"){
+    set priority(priority: PriorityType){
 
         this.priority = priority;
 
@@ -78,6 +79,18 @@ export class Todo {
     get createdAt(){
 
         return this.createdAt;
+
+    }
+
+    get mustBeCompletedIn(){
+
+        return this.mustBeCompletedIn;
+
+    }
+
+    set mustBeCompletedIn(mustBeCompletedIn: MustBeCompletedIn){
+
+        this.mustBeCompletedIn = mustBeCompletedIn;
 
     }
 

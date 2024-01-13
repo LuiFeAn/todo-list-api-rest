@@ -1,9 +1,11 @@
+import { PriorityType } from "src/application/entities/todos/interfaces";
 
 export interface ICreateTodoRequest{
 
     title: string,
     description?: string,
-    priority: "High" | "Medium" | "Low"
+    mustBeCompletedIn: Date,
+    priority: PriorityType
     userId: string,
 
 }
