@@ -4,8 +4,11 @@ import { IRegisterUserResponse } from "./interfaces/register-user-response";
 import { Email } from "../../entities/users/value_objects/email";
 import { Password } from "../../entities/users/value_objects/password";
 import { Username } from "../../entities/users/value_objects/username";
-import { UsersRepository } from "src/application/repositories/users-repository";
+import { UsersRepository } from "src/application/repositories/interfaces/users-repository";
+import { Injectable } from "@nestjs/common";
 
+
+@Injectable()
 export class RegisterUser {
 
     constructor(private readonly usersRepository: UsersRepository){}
@@ -20,7 +23,7 @@ export class RegisterUser {
             password: new Password(password),
             username: new Username(username),
         });
-
+        
         await this.usersRepository.create(user);
 
         return {

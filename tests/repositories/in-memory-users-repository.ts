@@ -1,5 +1,5 @@
 import { User } from "src/application/entities/users/user";
-import { UsersRepository } from "src/application/repositories/users-repository";
+import { UsersRepository } from "src/application/repositories/interfaces/users-repository";
 
 
 export class InMemoryUsersRepository implements UsersRepository {
