@@ -1,4 +1,4 @@
-import { Todo } from "../../entities/todos/todo";
+import { Todo } from "src/application/entities/todos/todo"
 
 export interface IFindManyTodosFromUserProps {
 

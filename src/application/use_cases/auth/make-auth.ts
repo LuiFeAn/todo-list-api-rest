@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { IMakeAuthRequest } from "./interfaces/make-auth-request";
 import { JwtService } from "@nestjs/jwt";
 import { compare } from "bcrypt";
-import { UsersRepository } from "../../../../src/application/repositories/interfaces/users-repository";
+import { UsersRepository } from "src/application/repositories/interfaces/users-repository";
 
 @Injectable()
 export class MakeAuthUseCase {

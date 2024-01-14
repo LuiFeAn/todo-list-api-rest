@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { IDeleteUserTodoRequest } from "./interfaces/delete-user-todo-request";
-import { TodoRepository } from "../../../../src/application/repositories/interfaces/todo-repository";
+import { TodoRepository } from "src/application/repositories/interfaces/todo-repository";
 
 @Injectable()
 export class DeleteUserTodoUseCase {

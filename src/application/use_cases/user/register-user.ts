@@ -4,7 +4,7 @@ import { IRegisterUserResponse } from "./interfaces/register-user-response";
 import { Email } from "../../entities/users/value_objects/email";
 import { Password } from "../../entities/users/value_objects/password";
 import { Username } from "../../entities/users/value_objects/username";
-import { UsersRepository } from "../../../application/repositories/interfaces/users-repository";
+import { UsersRepository } from "src/application/repositories/interfaces/users-repository";
 import { Injectable } from "@nestjs/common";
 import { EmailAlreadyExists } from "./errors/email-already-exists";
 import { hash } from "bcrypt";

@@ -1,12 +1,12 @@
-import { Todo } from "../../entities/todos/todo";
+import { Todo } from "src/application/entities/todos/todo";
 import { ICreateTodoRequest } from "./interfaces/create-todo-request";
-import { Title } from "../../entities/todos/value_objects/title";
-import { Description } from "../../entities/todos/value_objects/description";
-import { TodoRepository } from "../../repositories/interfaces/todo-repository";
-import { MustBeCompletedIn } from "../../entities/todos/value_objects/must_be_completed_in";
+import { Title } from "src/application/entities/todos/value_objects/title";
+import { Description } from "src/application/entities/todos/value_objects/description";
+import { TodoRepository } from "src/application/repositories/interfaces/todo-repository";
+import { MustBeCompletedIn } from "src/application/entities/todos/value_objects/must_be_completed_in";
 import { ICreateTodoResponse } from "./interfaces/create-todo-response";
 import { Injectable } from "@nestjs/common";
-import { UsersRepository } from "../../../../src/application/repositories/interfaces/users-repository";
+import { UsersRepository } from "src/application/repositories/interfaces/users-repository";
 import { UserNoExists } from "../user/errors/user-no-exists";
 
 

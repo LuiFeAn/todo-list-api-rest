@@ -1,4 +1,4 @@
-import { User } from "../../../../src/application/entities/users/user";
+import { User } from "../../entities/users/user";
 
 export abstract class UsersRepository {
 

@@ -1,10 +1,9 @@
 import { Injectable } from "@nestjs/common";
-import { TodoRepository } from "../../repositories/interfaces/todo-repository";
+import { TodoRepository } from "src/application/repositories/interfaces/todo-repository";
 import { IUpdateUserTodoRequest } from "./interfaces/update-user-todo";
-import { Todo } from "../../../../src/application/entities/todos/todo";
-import { Title } from "../../../../src/application/entities/todos/value_objects/title";
-import { Description } from "../../../../src/application/entities/todos/value_objects/description";
-import { MustBeCompletedIn } from "../../../../src/application/entities/todos/value_objects/must_be_completed_in";
+import { Title } from "src/application/entities/todos/value_objects/title";
+import { Description } from "src/application/entities/todos/value_objects/description";
+import { MustBeCompletedIn } from "src/application/entities/todos/value_objects/must_be_completed_in";
 import { TodoNotFound } from "./errors/todo-not-found";
 
 @Injectable()

@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { TodoRepository } from "../../repositories/interfaces/todo-repository";
+import { TodoRepository } from "src/application/repositories/interfaces/todo-repository";
 import { IFindUserTodosRequest } from "./interfaces/find-user-todos-request";
 
 @Injectable()
