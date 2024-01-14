@@ -9,3 +9,34 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum PriorityEnum {
+  High
+  Medium
+  Low
+}
+
+model TodoList {
+  id                String       @id @default(uuid()) @db.Uuid()
+  title             String       @db.VarChar(100)
+  description       String       @db.VarChar(5000)
+  mustBeCompletedIn DateTime     @map("must_be_completed_in")
+  finishedIn        DateTime?    @map("finished_in")
+  priority          PriorityEnum
+  createdAt         DateTime     @map("created_at")
+  userId            String       @map("user_id") @db.Uuid()
+  user              User         @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map("todos")
+}
+
+model User {
+  id        String     @id @default(uuid()) @db.Uuid()
+  username  String     @db.VarChar(150)
+  email     String     @unique
+  password  String
+  createdAt DateTime   @map("created_at")
+  todos     TodoList[]
+
+  @@map("users")
+}
