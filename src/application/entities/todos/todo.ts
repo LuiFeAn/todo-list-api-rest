@@ -24,73 +24,73 @@ export class Todo {
 
     get id(){
 
-        return this.id
+        return this.props.id
 
     }
 
     get title(){
 
-        return this.title;
+        return this.props.title;
 
     }
 
     set title(title: Title){
 
-        this.title = title;
+        this.props.title = title;
 
     }
 
     get description(){
 
-        return this.description;
+        return this.props.description;
 
     }
 
     set description(description: Description){
 
-        this.description = description;
+        this.props.description = description;
 
     }
 
     get finishedIn(){
 
-        return this.finishedIn;
+        return this.props.finishedIn;
 
     }
 
     get priority(){
 
-        return this.priority;
+        return this.props.priority;
 
     }
 
     set priority(priority: PriorityType){
 
-        this.priority = priority;
+        this.props.priority = priority;
 
     }
 
     get userId(){
 
-        return this.userId;
+        return this.props.userId;
 
     }
 
     get createdAt(){
 
-        return this.createdAt;
+        return this.props.createdAt;
 
     }
 
     get mustBeCompletedIn(){
 
-        return this.mustBeCompletedIn;
+        return this.props.mustBeCompletedIn;
 
     }
 
     set mustBeCompletedIn(mustBeCompletedIn: MustBeCompletedIn){
 
-        this.mustBeCompletedIn = mustBeCompletedIn;
+        this.props.mustBeCompletedIn = mustBeCompletedIn;
 
     }
 

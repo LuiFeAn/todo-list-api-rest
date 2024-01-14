@@ -24,55 +24,55 @@ export class User {
 
     get username(){
 
-        return this.username
+        return this.props.username;
 
     }
 
     get id(){
 
-        return this.id;
+        return this.props.id
 
     }
 
     set username(username: Username){
 
-        this.username = username;
+        this.props.username = username;
 
     }
 
     get password(){
 
-        return this.password
+        return this.props.password
 
     }
 
     set password(password: Password){
         
-        this.password = password;
+        this.props.password = password;
         
     }
 
     get email(){
 
-        return this.email
+        return this.props.email
 
     }
 
     set email(email: Email){
 
-        this.email = email;
+        this.props.email = email;
 
     }
 
     get createdAt(){
 
-        return this.createdAt;
+        return this.props.createdAt;
 
     }
 
     get todoList(){
 
-        return this.todoList;
+        return this.props.todoList;
 
     }
 
