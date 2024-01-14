@@ -16,7 +16,7 @@ export class User {
 
         this.props = {
             ...props,
-            id: randomUUID(),
+            id: props.id ?? randomUUID(),
             createdAt: props.createdAt ?? new Date()
         }
 

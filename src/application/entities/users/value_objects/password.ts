@@ -1,4 +1,3 @@
-
 export class Password {
 
     private readonly password: string

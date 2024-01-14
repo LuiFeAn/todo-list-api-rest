@@ -1,13 +1,28 @@
 import { Todo } from "../../entities/todos/todo";
 
+export interface IFindManyTodosFromUserProps {
+
+    userId: string,
+    page: number,
+    quanty: number,
+    title: string,
+
+}
+
+export interface IUpdateTodo {
+
+    todoId: string,
+    userId: string,
+    body: Todo
+
+}
 
 export abstract class TodoRepository {
 
     abstract create(todo: Todo): Promise<void>
-    // abstract findById(todoId: string): Promise<Todo | null>
-    // abstract update(todoId: string): Promise<Todo>
-    // abstract delete(todoId: string): Promise<void>
-    // abstract save(todo: Todo): Promise<void>
-    // abstract countManyByUserId(userId: string): Promise<number>
-    // abstract findManyByUserId(userId: string): Promise<Todo[]>
+    abstract findTodo(todoId: string): Promise<Todo | undefined >
+    abstract update({ userId, todoId, body }: IUpdateTodo): Promise<Todo>
+    abstract delete(todoId: string,userId: string): Promise<void>
+    abstract findManyTodosFromUser(findManyTodosProps: IFindManyTodosFromUserProps): Promise<Todo[]>
+
 }

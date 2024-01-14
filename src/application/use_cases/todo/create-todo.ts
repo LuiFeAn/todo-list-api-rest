@@ -4,18 +4,33 @@ import { Title } from "../../entities/todos/value_objects/title";
 import { Description } from "../../entities/todos/value_objects/description";
 import { TodoRepository } from "../../repositories/interfaces/todo-repository";
 import { MustBeCompletedIn } from "../../entities/todos/value_objects/must_be_completed_in";
+import { ICreateTodoResponse } from "./interfaces/create-todo-response";
+import { Injectable } from "@nestjs/common";
+import { UsersRepository } from "../../../../src/application/repositories/interfaces/users-repository";
+import { UserNoExists } from "../user/errors/user-no-exists";
 
-export class CreateTodo {
+
+@Injectable()
+export class CreateTodoUseCase {
 
     constructor(
-        private readonly todosRepository: TodoRepository
+        private readonly todosRepository: TodoRepository,
+        private readonly usersRepository: UsersRepository
     ){}
 
-    async execute(request: ICreateTodoRequest){
+    async execute(request: ICreateTodoRequest): Promise<ICreateTodoResponse>{
 
         const { priority, title, description, userId, mustBeCompletedIn } = request;
 
-        const todo = new Todo({
+        const userExists = await this.usersRepository.findById(userId);
+
+        if( !userExists ){
+
+            throw new UserNoExists();
+
+        }
+
+        const todoList = new Todo({
             title: new Title(title),
             description: new Description(description),
             mustBeCompletedIn: new MustBeCompletedIn(mustBeCompletedIn),
@@ -23,10 +38,10 @@ export class CreateTodo {
             userId,
         })
 
-        await this.todosRepository.create(todo);
+        await this.todosRepository.create(todoList);
 
         return {
-            todo
+           todoList
         }
 
     }
