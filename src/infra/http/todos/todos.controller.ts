@@ -58,7 +58,9 @@ export class TodosController {
         type: TodoSwaggerResponseDto,
     },)
     @HttpCode(206)
-    async partialUpdate(@Param() id: string, @Body() body: UpdateUserTodoDTO, @Req() request: Request){
+    async partialUpdate(@Param() queryParams: { id: string }, @Body() body: UpdateUserTodoDTO, @Req() request: Request){
+
+        const { id } = queryParams;
 
         const { mustBeCompletedIn, description, priority, title } = body;
 
