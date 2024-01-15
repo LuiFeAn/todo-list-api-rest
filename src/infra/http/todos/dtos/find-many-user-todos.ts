@@ -1,16 +1,9 @@
 
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { CommonPaginationDTO } from '../../dtos/common-pagination';
+import { IsOptional, IsString } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
-export class FindManyTodosFromUserDTO {
-
-    @IsNotEmpty()
-    @ApiProperty()
-    page: number
-
-    @IsNotEmpty()
-    @ApiProperty()
-    quanty: number
+export class FindManyTodosFromUserDTO extends CommonPaginationDTO {
 
     @IsOptional()
     @ApiProperty()
