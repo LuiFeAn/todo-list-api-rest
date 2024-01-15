@@ -4,7 +4,7 @@ import { CreateUserDto } from "./dtos/create.user.dto";
 import { UserToHttpMapper } from "./mappers/user-to-http";
 import { EmailAlreadyExists } from "src/application/use_cases/user/errors/email-already-exists";
 import { SetMetadata } from "@nestjs/common";
-import { ApiTags,ApiOperation, ApiResponse, ApiOkResponse } from '@nestjs/swagger';
+import { ApiTags,ApiOperation, ApiResponse, ApiOkResponse, ApiCreatedResponse } from '@nestjs/swagger';
 import { CreateUserSwaggerResponseDto } from "./dtos/create-user-response-dto";
 
 @Controller('users')
@@ -19,7 +19,7 @@ export class UsersController {
     @Post()
     @ApiOperation({summary:'Registra um usuário no sistema'})
     @ApiResponse({status:409,description:'Email já cadastrado'})
-    @ApiOkResponse({
+    @ApiCreatedResponse({
         description: 'Usuário registrado com sucesso',
         type: CreateUserSwaggerResponseDto,
         status:201
