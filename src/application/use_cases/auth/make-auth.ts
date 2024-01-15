@@ -1,14 +1,14 @@
 import { Injectable } from "@nestjs/common";
 import { IMakeAuthRequest } from "./interfaces/make-auth-request";
-import { JwtService } from "@nestjs/jwt";
 import { compare } from "bcrypt";
 import { UsersRepository } from "src/application/repositories/interfaces/users-repository";
+import { GenerateJwtUseCase } from "../jwt/generate-jwt";
 
 @Injectable()
 export class MakeAuthUseCase {
 
     constructor(
-        private readonly jwtService: JwtService,
+        private readonly generateJwt: GenerateJwtUseCase,
         private readonly usersRepository: UsersRepository,
         ){}
 
@@ -32,10 +32,15 @@ export class MakeAuthUseCase {
 
         }
 
-        const acessToken = await this.jwtService.signAsync({
-            id: user.id,
-            username: user.username,
-            email: user.email.value,
+        const acessToken = await this.generateJwt.execute({
+            payload:{
+                id: user.id,
+                username: user.username,
+                email: user.email.value,
+            },
+            options:{
+                expiresIn:'3h'
+            }
         });
 
         return {

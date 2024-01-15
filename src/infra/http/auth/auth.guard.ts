@@ -36,7 +36,7 @@ export class AuthGuard implements CanActivate {
 
         if( !token ){
 
-            throw new UnauthorizedException('Token de autorização não fornecido')
+            throw new UnauthorizedException('Token inválido')
 
         }
 
@@ -54,7 +54,7 @@ export class AuthGuard implements CanActivate {
 
                 if( err instanceof TokenExpiredError ){
 
-                    throw new UnauthorizedException('O token fornecido já foi expirado');
+                    throw new UnauthorizedException('O token fornecido já foi expirado. Por favor, se autentique novamente para gerar seu refresh token');
 
                 }
                 

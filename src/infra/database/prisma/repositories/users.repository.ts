@@ -21,6 +21,19 @@ export class PrismaUsersRepository implements UsersRepository {
 
     }
 
+    async updatePassword(newPassword: string, userId: string): Promise<void> {
+        
+        await this.prismaService.user.update({
+            where:{
+                id: userId
+            },
+            data:{
+                password: newPassword
+            }
+        });
+
+    }
+
     async findById(userId: string): Promise<User> {
 
         const user = await this.prismaService.user.findUnique({

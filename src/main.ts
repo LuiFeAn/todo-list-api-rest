@@ -2,10 +2,13 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './infra/app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { config as dotenvConfig } from 'dotenv'
 
 async function bootstrap() {
 
   const _PORT = process.env.WEB_SERVER_PORT;
+
+  dotenvConfig();
 
   const app = await NestFactory.create(AppModule);
 
