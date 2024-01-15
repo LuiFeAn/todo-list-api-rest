@@ -30,8 +30,6 @@ export class ForgetPasswordController {
 
         }catch(err){
 
-            console.log(err);
-
             if( err instanceof UserNoExists ){
 
                 throw new NotFoundException('Por favor, verifique se seu email está correto')
