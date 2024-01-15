@@ -21,7 +21,8 @@ export class UsersController {
     @ApiResponse({status:409,description:'Email já cadastrado'})
     @ApiOkResponse({
         description: 'Usuário registrado com sucesso',
-        type: CreateUserSwaggerResponseDto
+        type: CreateUserSwaggerResponseDto,
+        status:201
     })
     async createUser(@Body() body: CreateUserDto){
 
