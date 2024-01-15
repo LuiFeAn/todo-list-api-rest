@@ -2,7 +2,6 @@ import { randomUUID } from "crypto";
 import { ITodo, PriorityType } from "./interfaces";
 import { Description } from "./value_objects/description";
 import { Title } from "./value_objects/title";
-import { MustBeCompletedIn } from "./value_objects/must_be_completed_in";
 import { Replace } from "src/helpers/replace";
 
 export class Todo {
@@ -16,7 +15,7 @@ export class Todo {
 
         this.props = {
             ...props,
-            id: randomUUID(),
+            id: props.id ?? randomUUID(),
             createdAt: props.createdAt ?? new Date()
         }
 
@@ -88,7 +87,7 @@ export class Todo {
 
     }
 
-    set mustBeCompletedIn(mustBeCompletedIn: MustBeCompletedIn){
+    set mustBeCompletedIn(mustBeCompletedIn: Date){
 
         this.props.mustBeCompletedIn = mustBeCompletedIn;
 
