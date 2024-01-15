@@ -10,8 +10,10 @@ import { UpdateUserTodoDTO } from "./dtos/update-user-todo";
 import { UserNoExists } from "src/application/use_cases/user/errors/user-no-exists";
 import { ApiTags, ApiOperation, ApiResponse, ApiOkResponse } from "@nestjs/swagger";
 import { Request } from "express";
-import { Todo } from "src/application/entities/todos/todo";
 import { TodoSwaggerResponseDto } from "./dtos/find-many-user-todo-swagger-dto";
+import { TodoNotFound } from "src/application/use_cases/todo/errors/todo-not-found";
+import { TodoNotFoundExepction } from "./errors/todo-not-found";
+import { CommonUuidQueryParam } from "../dtos/common-uuid-param";
 
 @Controller('todos')
 @ApiTags('Tarefas')
@@ -58,22 +60,34 @@ export class TodosController {
         type: TodoSwaggerResponseDto,
     },)
     @HttpCode(206)
-    async partialUpdate(@Param() queryParams: { id: string }, @Body() body: UpdateUserTodoDTO, @Req() request: Request){
+    async partialUpdate(@Param() queryParams: CommonUuidQueryParam, @Body() body: UpdateUserTodoDTO, @Req() request: Request){
 
         const { id } = queryParams;
 
         const { mustBeCompletedIn, description, priority, title } = body;
 
-        const { updatedTodo } = await this.updateUserTodo.execute({
-            id,
-            userId: request.jwtDecode.id,
-            mustBeCompletedIn: new Date(mustBeCompletedIn),
-            description,
-            priority,
-            title
-        });
+        try{
 
-        return TodoToHttpMapper.toHttp(updatedTodo);
+            const { updatedTodo } = await this.updateUserTodo.execute({
+                id,
+                userId: request.jwtDecode.id,
+                mustBeCompletedIn,
+                description,
+                priority,
+                title
+            });
+    
+            return TodoToHttpMapper.toHttp(updatedTodo);
+
+        }catch(err){
+
+            
+            if( err instanceof TodoNotFound ){
+
+                throw new TodoNotFoundExepction();
+            }
+
+        }
 
 
     }
@@ -81,12 +95,28 @@ export class TodosController {
     @Delete('/:id')
     @ApiOperation({summary:'Deleta uma tarefa'})
     @ApiResponse({status:204,description:'Tarefa deletada com sucesso'})
-    async delete(@Param() id: string, @Req() request: Request){
+    @HttpCode(204)
+    async delete(@Param() queryParams: CommonUuidQueryParam, @Req() request: Request){
 
-        await this.deleteUserTodo.execute({
-            todoId: id,
-            userId: request.jwtDecode.id
-        });;
+        const { id } = queryParams;
+
+        try{
+
+            
+            await this.deleteUserTodo.execute({
+                todoId: id,
+                userId: request.jwtDecode.id
+            });;
+
+        }catch(err){
+
+            if( err instanceof TodoNotFound ){
+
+                throw new TodoNotFoundExepction();
+
+            }
+
+        }
 
     }
 
@@ -119,9 +149,9 @@ export class TodosController {
 
             if( err instanceof Error ){
 
-                if( err.message === 'Completion date precedes creation date'){
+                if( err.message === 'Invalid complete date'){
 
-                    throw new UnauthorizedException('A data referente a conclusão da tarefa é inválida');
+                    throw new UnauthorizedException('A data referente a conclusão da tarefa é inválida\nPor favor, insira uma data maior ou igual a data atual');
 
                 }
 

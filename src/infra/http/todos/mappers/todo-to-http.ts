@@ -8,7 +8,7 @@ export class TodoToHttpMapper {
             id: todo.id,
             title: todo.title.value,
             description: todo.description.value,
-            mustBeCompletedIn: todo.mustBeCompletedIn.value,
+            mustBeCompletedIn: todo.mustBeCompletedIn,
             finishedIn: todo.finishedIn,
             priority: todo.priority,
             createdAt:todo.createdAt,
