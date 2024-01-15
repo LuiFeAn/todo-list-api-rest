@@ -1,5 +1,5 @@
 import { Todo } from "src/application/entities/todos/todo";
-import { IFindManyTodosFromUserProps, IUpdateTodo, TodoRepository } from "src/application/repositories/interfaces/todo-repository";
+import { IFindManyTodosFromUserCount, IFindManyTodosFromUserProps, IUpdateTodo, TodoRepository } from "src/application/repositories/interfaces/todo-repository";
 import { PrismaService } from "../prisma.service";
 import { PrismaTodoMapper } from "../mappers/todo-mapper";
 import { Injectable } from "@nestjs/common";
@@ -68,7 +68,39 @@ export class PrismaTodosRepository implements TodoRepository {
 
     }
 
-    async findManyTodosFromUser({
+    private applyWhereTitle(title?: string){
+
+        if( !title ){
+
+            return {} 
+
+        }
+
+        return {
+            title:{
+                contains: `${title}%`
+            }
+        }
+
+    }
+
+    async findManyTodosFromUserCount({ 
+        userId, 
+        title }: IFindManyTodosFromUserCount): Promise<number> {
+        
+        const userTodos = await this.prismaService.todoList.count({
+            where:{
+                userId,
+                ...(this.applyWhereTitle(title))
+            }
+        });
+
+        return userTodos;
+
+
+    }
+
+    async findManyTodosFromUserWithPagination({
         userId,
         page,
         quanty,
@@ -78,16 +110,10 @@ export class PrismaTodosRepository implements TodoRepository {
         const userTodos = await this.prismaService.todoList.findMany({
             where:{
                 userId,
-                ...(
-                    title ? {
-                        title:{
-                            contains: `${title}%`
-                        }
-                    } : {}
-                )
+                ...(this.applyWhereTitle(title))
             },
             skip: +page,
-            take: +quanty
+            take: +quanty,
         });
 
         return userTodos.map(PrismaTodoMapper.toDomain)

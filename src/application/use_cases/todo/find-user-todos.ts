@@ -1,6 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { TodoRepository } from "src/application/repositories/interfaces/todo-repository";
 import { IFindUserTodosRequest } from "./interfaces/find-user-todos-request";
+import { Paginate } from "src/helpers/pagination";
+import { CommonSearchNotFound } from "../common/errors/common-search-not-found";
 
 @Injectable()
 export class FindUserTodosUseCase {
@@ -13,14 +15,32 @@ export class FindUserTodosUseCase {
 
         const { userId, page, quanty, title } = request;
 
-        const todos = await this.todosRepository.findManyTodosFromUser({
-            userId,
-            page,
-            quanty,
-            title
+        const allTodosCount = await this.todosRepository.findManyTodosFromUserCount({
+            title,
+            userId
         });
 
-        return todos;
+        const { currentPage, totalPages } = Paginate(page,quanty,allTodosCount);
+
+        const todosWithPagination = await this.todosRepository.findManyTodosFromUserWithPagination({
+            userId,
+            page: currentPage,
+            quanty,
+            title,
+        });
+
+        if( todosWithPagination.length === 0 
+            && currentPage > todosWithPagination.length 
+            || todosWithPagination.length == 0 ){
+            
+                throw new CommonSearchNotFound();
+
+        }
+
+        return {
+            todoList: todosWithPagination,
+            totalPages
+        }
 
     }
 

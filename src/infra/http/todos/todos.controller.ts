@@ -14,6 +14,8 @@ import { TodoSwaggerResponseDto } from "./dtos/find-many-user-todo-swagger-dto";
 import { TodoNotFound } from "src/application/use_cases/todo/errors/todo-not-found";
 import { TodoNotFoundExepction } from "./errors/todo-not-found";
 import { CommonUuidQueryParam } from "../dtos/common-uuid-param";
+import { CommonSearchNotFoundException } from "../errors/common-search-not-found";
+import { CommonSearchNotFound } from "src/application/use_cases/common/errors/common-search-not-found";
 
 @Controller('todos')
 @ApiTags('Tarefas')
@@ -37,18 +39,37 @@ export class TodosController {
         description:"As propriedades page ou quanty não foram fornecidas nos query params",
         status:400,
     })
+    @ApiResponse({
+        description:"Não foram encontrados resultados referentes a solicitação feita",
+        status:404,
+    })
     async obtainTodos(@Query() params: FindManyTodosFromUserDTO, @Req() request: Request){
 
-        const { page, quanty, title } = params;
+        try{
 
-        const userTodos = await this.findUserTodos.execute({
-            page,
-            quanty,
-            title,
-            userId: request.jwtDecode.id
-        });
+            const { page, quanty, title } = params;
 
-        return userTodos.map(TodoToHttpMapper.toHttp)
+            const { todoList, totalPages } = await this.findUserTodos.execute({
+                page,
+                quanty,
+                title,
+                userId: request.jwtDecode.id
+            });
+
+            return {
+                todoList: todoList.map(TodoToHttpMapper.toHttp),
+                totalPages
+            }
+
+        }catch(err){
+
+            if( err instanceof CommonSearchNotFound ){
+
+                throw new CommonSearchNotFoundException();
+
+            }
+
+        }
 
     }
 
