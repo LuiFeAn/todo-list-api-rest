@@ -19,6 +19,12 @@ export class PrismaTodosRepository implements TodoRepository {
             }
         });
 
+        if( !todo ){
+
+            return
+
+        }
+
         return PrismaTodoMapper.toDomain(todo);
 
     }
