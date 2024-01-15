@@ -3,7 +3,6 @@ import { TodoRepository } from "src/application/repositories/interfaces/todo-rep
 import { IUpdateUserTodoRequest } from "./interfaces/update-user-todo";
 import { Title } from "src/application/entities/todos/value_objects/title";
 import { Description } from "src/application/entities/todos/value_objects/description";
-import { MustBeCompletedIn } from "src/application/entities/todos/value_objects/must_be_completed_in";
 import { TodoNotFound } from "./errors/todo-not-found";
 
 @Injectable()
@@ -45,7 +44,7 @@ export class UpdateUserTodoUseCase {
 
         if( mustBeCompletedIn ){
 
-            currentTodo.mustBeCompletedIn = new MustBeCompletedIn(mustBeCompletedIn);
+            currentTodo.mustBeCompletedIn = mustBeCompletedIn;
 
         }
 

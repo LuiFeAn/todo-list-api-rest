@@ -2,7 +2,6 @@ import { Todo } from "src/application/entities/todos/todo"
 import { TodoList } from "@prisma/client"
 import { Title } from "src/application/entities/todos/value_objects/title"
 import { Description } from "src/application/entities/todos/value_objects/description"
-import { MustBeCompletedIn } from "src/application/entities/todos/value_objects/must_be_completed_in"
 
 export class PrismaTodoMapper {
 
@@ -13,7 +12,7 @@ export class PrismaTodoMapper {
             title: todo.title.value,
             description: todo.description.value,
             priority: todo.priority,
-            mustBeCompletedIn: todo.mustBeCompletedIn.value,
+            mustBeCompletedIn: todo.mustBeCompletedIn,
             createdAt: todo.createdAt,
             userId: todo.userId,
         }
@@ -27,7 +26,7 @@ export class PrismaTodoMapper {
             title: new Title(todo.title),
             description: new Description(todo.description),
             priority: todo.priority,
-            mustBeCompletedIn: new MustBeCompletedIn(todo.mustBeCompletedIn),
+            mustBeCompletedIn: todo.mustBeCompletedIn,
             userId: todo.userId,
             createdAt: todo.createdAt,
         })        
