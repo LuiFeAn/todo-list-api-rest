@@ -9,7 +9,7 @@ import { ForgetPasswordUseCase } from "src/application/use_cases/forget_password
 
 @Controller('/forget-password')
 @SetMetadata('PUBLIC_RESOURCE',true)
-@ApiTags('Redefinição de senha')
+@ApiTags('Esqueci minha senha')
 export class ForgetPasswordController {
 
     constructor(
@@ -19,7 +19,7 @@ export class ForgetPasswordController {
     @Post()
     @ApiOperation({summary:'Redefine a senha de um usuário registrado'})
     @ApiResponse({status:404,description:'Email não cadastrado no sistema'})
-    @ApiResponse({status:201,description:'Email de redefinição de senha enviado'})
+    @ApiResponse({status:204,description:'Email de redefinição de senha enviado'})
     async sendEmail(@Body() body: ForgetPasswordDto){
 
         try{

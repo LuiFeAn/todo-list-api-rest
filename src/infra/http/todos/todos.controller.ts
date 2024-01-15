@@ -8,7 +8,7 @@ import { CreateUserTodoDTO } from "./dtos/create-user-todo";
 import { TodoToHttpMapper } from "./mappers/todo-to-http";
 import { UpdateUserTodoDTO } from "./dtos/update-user-todo";
 import { UserNoExists } from "src/application/use_cases/user/errors/user-no-exists";
-import { ApiTags, ApiOperation, ApiResponse, ApiOkResponse } from "@nestjs/swagger";
+import { ApiTags, ApiOperation, ApiResponse, ApiOkResponse, ApiBearerAuth, ApiHeader } from "@nestjs/swagger";
 import { Request } from "express";
 import { TodoSwaggerResponseDto } from "./dtos/find-many-user-todo-swagger-dto";
 import { TodoNotFound } from "src/application/use_cases/todo/errors/todo-not-found";
@@ -19,6 +19,11 @@ import { CommonSearchNotFound } from "src/application/use_cases/common/errors/co
 
 @Controller('todos')
 @ApiTags('Tarefas')
+@ApiBearerAuth()
+@ApiHeader({
+    name: 'Authorization',
+    description: 'Token JWT',
+})
 export class TodosController {
 
     constructor(
