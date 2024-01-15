@@ -13,10 +13,11 @@ export class FindUserTodosUseCase {
 
     async execute(request: IFindUserTodosRequest){
 
-        const { userId, page, quanty, title } = request;
+        const { userId, page, quanty, title, priority } = request;
 
         const allTodosCount = await this.todosRepository.findManyTodosFromUserCount({
             title,
+            priority,
             userId
         });
 
@@ -25,6 +26,7 @@ export class FindUserTodosUseCase {
         const todosWithPagination = await this.todosRepository.findManyTodosFromUserWithPagination({
             userId,
             page: currentPage,
+            priority,
             quanty,
             title,
         });

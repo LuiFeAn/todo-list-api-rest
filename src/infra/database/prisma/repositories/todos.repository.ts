@@ -3,6 +3,7 @@ import { IFindManyTodosFromUserCount, IFindManyTodosFromUserProps, IUpdateTodo, 
 import { PrismaService } from "../prisma.service";
 import { PrismaTodoMapper } from "../mappers/todo-mapper";
 import { Injectable } from "@nestjs/common";
+import { PriorityEnum } from "@prisma/client";
 
 @Injectable()
 export class PrismaTodosRepository implements TodoRepository {
@@ -84,14 +85,33 @@ export class PrismaTodosRepository implements TodoRepository {
 
     }
 
+    private applyWherePriority(priority?: PriorityEnum){
+
+        if( !priority ){
+
+
+            return {}
+
+        }
+
+        return {
+            priority:{
+                equals:priority
+            }
+        }
+
+    }
+
     async findManyTodosFromUserCount({ 
         userId, 
+        priority,
         title }: IFindManyTodosFromUserCount): Promise<number> {
         
         const userTodos = await this.prismaService.todoList.count({
             where:{
                 userId,
-                ...(this.applyWhereTitle(title))
+                ...(this.applyWhereTitle(title)),
+                ...(this.applyWherePriority(priority))
             }
         });
 
@@ -103,6 +123,7 @@ export class PrismaTodosRepository implements TodoRepository {
     async findManyTodosFromUserWithPagination({
         userId,
         page,
+        priority,
         quanty,
         title,
     }: IFindManyTodosFromUserProps): Promise<Todo[]> {
@@ -110,7 +131,8 @@ export class PrismaTodosRepository implements TodoRepository {
         const userTodos = await this.prismaService.todoList.findMany({
             where:{
                 userId,
-                ...(this.applyWhereTitle(title))
+                ...(this.applyWhereTitle(title)),
+                ...(this.applyWherePriority(priority))
             },
             skip: +page,
             take: +quanty,

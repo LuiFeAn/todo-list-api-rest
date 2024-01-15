@@ -1,7 +1,8 @@
 
 import { CommonPaginationDTO } from '../../dtos/common-pagination';
-import { IsOptional, IsString } from 'class-validator';
+import { IsEnum, IsOptional, IsString } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { PriorityEnum } from '@prisma/client';
 
 export class FindManyTodosFromUserDTO extends CommonPaginationDTO {
 
@@ -10,5 +11,11 @@ export class FindManyTodosFromUserDTO extends CommonPaginationDTO {
     @ApiPropertyOptional()
     @IsString()
     title?: string
+
+    @IsOptional()
+    @ApiProperty()
+    @ApiPropertyOptional()
+    @IsEnum(PriorityEnum)
+    priority?: PriorityEnum
 
 }

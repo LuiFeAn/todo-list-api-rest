@@ -52,12 +52,13 @@ export class TodosController {
 
         try{
 
-            const { page, quanty, title } = params;
+            const { page, quanty, title, priority } = params;
 
             const { todoList, totalPages } = await this.findUserTodos.execute({
                 page,
                 quanty,
                 title,
+                priority,
                 userId: request.jwtDecode.id
             });
 
