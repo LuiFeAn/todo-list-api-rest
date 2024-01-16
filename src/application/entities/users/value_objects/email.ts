@@ -11,7 +11,7 @@ export class Email {
 
         }
 
-        this.email = email;
+        this.email = email.trim();
 
     }
 

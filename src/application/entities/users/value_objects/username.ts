@@ -11,7 +11,7 @@ export class Username {
 
         }
 
-        this.username = username;
+        this.username = username.trim();
 
     }
 

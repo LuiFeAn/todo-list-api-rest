@@ -12,7 +12,7 @@ export class Description {
 
         }
 
-        this.description = description;
+        this.description = description.trim();
 
     }
 

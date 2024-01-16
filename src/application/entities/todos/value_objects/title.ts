@@ -12,7 +12,7 @@ export class Title {
 
         }
 
-        this.title = title;
+        this.title = title.trim();
 
     }
 

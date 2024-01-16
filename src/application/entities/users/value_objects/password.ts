@@ -10,7 +10,7 @@ export class Password {
 
         }
 
-        this.password = password;
+        this.password = password.trim();
 
     }
 
