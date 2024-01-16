@@ -10,7 +10,9 @@ async function bootstrap() {
 
   dotenvConfig();
 
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule,{
+    cors:true
+  });
 
     const config = new DocumentBuilder()
     .setTitle('TODO-API')
