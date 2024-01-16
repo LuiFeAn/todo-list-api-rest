@@ -5,7 +5,7 @@ export class CreateUserDto {
 
     @IsNotEmpty()
     @IsString()
-    @Length(0,150)
+    @Length(1,150)
     @ApiProperty()
     username: string
 
