@@ -153,6 +153,9 @@ export class PrismaTodosRepository implements TodoRepository {
                 ...(this.applyWhereTitle(title)),
                 ...(this.applyWherePriority(priority))
             },
+            orderBy:{
+                title:'asc'
+            },
             skip: +page,
             take: +quanty,
         });
