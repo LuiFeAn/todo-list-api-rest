@@ -1,0 +1,48 @@
+version: "3"
+
+services:
+
+    db:
+        image: postgres
+        container_name: TODO_LIST_DB
+        expose:
+            - 5432
+        ports:
+            - 5432
+        environment:
+            POSTGRES_USER: db_user_exemple
+            POSTGRES_PASSWORD: db_password_exemple
+            POSTGRES_DB: db_name_exemple
+        volumes:
+            - pgsql_files:/var/lib/postgresql/data  
+
+    api:
+
+      build:
+        context: .
+        dockerfile: dockerfile
+      container_name: TODO_LIST_API
+      restart: always
+      expose:
+          - ${WEB_SERVER_PORT}
+      ports:
+          - "${WEB_SERVER_PORT}:${WEB_SERVER_PORT}"
+      depends_on:
+          - db
+      command: ["npm", "run", "start:dev"]
+      environment:
+          API_PORT: ${WB_SERVER_PORT}
+          JWT_SECRET: ${JWT_SECRET}
+          EMAIL_SENDER_SERVICE: ${EMAIL_SENDER_SERVICE}
+          EMAIL_SENDER_USER: ${EMAIL_SENDER_USER}
+          EMAIL_SENDER_PASSWORD: ${EMAIL_SENDER_PASSWORD}
+          APLLICATION_FRONT_PROTOCOL: ${APLLICATION_FRONT_PROTOCOL}
+          APPLICATION_FRONT_HOST: ${APPLICATION_FRONT_HOST}
+          APPLICATION_FRONT_PORT: ${APPLICATION_FRONT_PORT}
+          FRONT_APPLICATION: ${FRONT_APPLICATION}
+      volumes:
+            - server_files:/app/volumes
+
+volumes:
+    pgsql_files:
+    server_files:
