@@ -34,6 +34,8 @@ export class ForgetPasswordUseCase {
             }
         });
 
+        const url = `${process.env.APLLICATION_FRONT_PROTOCOL}://${process.env.APPLICATION_FRONT_HOST}:${process.env.APPLICATION_FRONT_PORT}`;
+
         await this.emailSender.execute({
             to:email,
             html:`
@@ -54,7 +56,7 @@ export class ForgetPasswordUseCase {
                 
                             <p style="color: #666;">Clique no link abaixo para redefinir sua senha:</p>
                 
-                            <a href="${process.env.FRONT_APPLICATION}/redefine-password/${jwt}" style="display: inline-block; padding: 10px 20px; background-color: #3498db; color: #fff; text-decoration: none; border-radius: 5px; margin-top: 10px;">Redefinir Senha</a>
+                            <a href="${url}/redefine-password/${jwt}" style="display: inline-block; padding: 10px 20px; background-color: #3498db; color: #fff; text-decoration: none; border-radius: 5px; margin-top: 10px;">Redefinir Senha</a>
                 
                             <p style="color: #666;">Atenciosamente,<br>TODOLIST</p>
                             
