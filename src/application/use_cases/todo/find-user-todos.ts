@@ -28,7 +28,7 @@ export class FindUserTodosUseCase {
             page: currentPage,
             priority,
             quanty,
-            title,
+            title: title.toUpperCase(),
         });
 
         if( todosWithPagination.length === 0 

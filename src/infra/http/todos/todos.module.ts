@@ -4,6 +4,7 @@ import { FindUserTodosUseCase } from 'src/application/use_cases/todo/find-user-t
 import { DeleteUserTodoUseCase } from 'src/application/use_cases/todo/delete-user-todo';
 import { UpdateUserTodoUseCase } from 'src/application/use_cases/todo/update-user-todo';
 import { CreateTodoUseCase } from 'src/application/use_cases/todo/create-todo';
+import { ObtainOneTodoUseCase } from 'src/application/use_cases/todo/obtain-one-todo';
 
 @Module({
   imports: [],
@@ -13,6 +14,7 @@ import { CreateTodoUseCase } from 'src/application/use_cases/todo/create-todo';
     FindUserTodosUseCase,
     UpdateUserTodoUseCase,
     DeleteUserTodoUseCase,
+    ObtainOneTodoUseCase,
   ]
 })
 export class TodosModule {}

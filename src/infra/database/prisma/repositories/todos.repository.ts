@@ -59,6 +59,25 @@ export class PrismaTodosRepository implements TodoRepository {
         
     }
 
+    async obtainOneUserTodo(todoId: string,userId: string): Promise<Todo> {
+        
+        const todo = await this.prismaService.todoList.findFirst({
+            where:{
+                userId,
+                id: todoId,
+            }
+        });
+
+        if( !todo ){
+
+            return
+
+        }
+
+        return PrismaTodoMapper.toDomain(todo);
+
+    }
+
     async delete(todoId: string): Promise<void> {
       
         await this.prismaService.todoList.delete({

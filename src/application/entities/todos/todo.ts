@@ -57,6 +57,12 @@ export class Todo {
 
     }
 
+    set finishedIn(finishedIn: Date){
+
+        this.props.finishedIn = finishedIn;
+
+    }
+
     get priority(){
 
         return this.props.priority;

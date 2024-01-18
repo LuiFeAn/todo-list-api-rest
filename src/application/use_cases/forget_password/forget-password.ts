@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { EmailSenderUseCase } from "../email/send-email";
 import { GenerateJwtUseCase } from "../jwt/generate-jwt";
 import { UsersRepository } from "src/application/repositories/interfaces/users-repository";
+import { UserNoExists } from "../user/errors/user-no-exists";
 
 @Injectable()
 export class ForgetPasswordUseCase {
@@ -15,6 +16,12 @@ export class ForgetPasswordUseCase {
     async execute(email: string){
 
         const user = await this.usersRepository.findByEmail(email);
+
+        if( !user ){
+
+            throw new UserNoExists();
+
+        }
 
         const jwt = await this.generateJwt.execute({
             payload:{
@@ -48,11 +55,7 @@ export class ForgetPasswordUseCase {
                 
                             <a href="${process.env.FRONT_APPLICATION}/redefine-password/${jwt}" style="display: inline-block; padding: 10px 20px; background-color: #3498db; color: #fff; text-decoration: none; border-radius: 5px; margin-top: 10px;">Redefinir Senha</a>
                 
-                            <p style="color: #666; margin-top: 20px;">Se você não solicitou a redefinição de senha, ignore este e-mail.</p>
-                
-                            <p style="color: #666;">O link de redefinição de senha é válido por 24 horas.</p>
-                
-                            <p style="color: #666;">Atenciosamente,<br>TODOLIST APP</p>
+                            <p style="color: #666;">Atenciosamente,<br>TODOLIST</p>
                             
                         </div>
                 

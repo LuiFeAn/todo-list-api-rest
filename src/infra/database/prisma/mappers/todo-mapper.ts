@@ -14,6 +14,7 @@ export class PrismaTodoMapper {
             priority: todo.priority,
             mustBeCompletedIn: todo.mustBeCompletedIn,
             createdAt: todo.createdAt,
+            finishedIn: todo.finishedIn,
             userId: todo.userId,
         }
 
@@ -28,6 +29,7 @@ export class PrismaTodoMapper {
             priority: todo.priority,
             mustBeCompletedIn: todo.mustBeCompletedIn,
             userId: todo.userId,
+            finishedIn: todo.finishedIn,
             createdAt: todo.createdAt,
         })        
 

@@ -8,5 +8,6 @@ export interface IUpdateUserTodoRequest {
     mustBeCompletedIn?: Date,
     priority?: PriorityType
     userId: string,
+    finishedIn?: Date,
 
 }

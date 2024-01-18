@@ -32,6 +32,7 @@ export abstract class TodoRepository {
     abstract create(todo: Todo): Promise<void>
     abstract findTodo(todoId: string): Promise<Todo | undefined >
     abstract update({ userId, todoId, body }: IUpdateTodo): Promise<Todo>
+    abstract obtainOneUserTodo(todoId: string,userId: string): Promise<Todo>
     abstract delete(todoId: string,userId: string): Promise<void>
     abstract findManyTodosFromUserCount({ userId, title, priority }: IFindManyTodosFromUserCount): Promise<number>
     abstract findManyTodosFromUserWithPagination(findManyTodosProps: IFindManyTodosFromUserProps): Promise<Todo[]>

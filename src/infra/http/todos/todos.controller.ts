@@ -16,6 +16,7 @@ import { TodoNotFoundExepction } from "./errors/todo-not-found";
 import { CommonUuidQueryParam } from "../dtos/common-uuid-param";
 import { CommonSearchNotFoundException } from "../errors/common-search-not-found";
 import { CommonSearchNotFound } from "src/application/use_cases/common/errors/common-search-not-found";
+import { ObtainOneTodoUseCase } from "src/application/use_cases/todo/obtain-one-todo";
 
 @Controller('todos')
 @ApiTags('Tarefas')
@@ -30,7 +31,8 @@ export class TodosController {
         private readonly findUserTodos: FindUserTodosUseCase,
         private readonly createTodo: CreateTodoUseCase,
         private readonly updateUserTodo: UpdateUserTodoUseCase,
-        private readonly deleteUserTodo: DeleteUserTodoUseCase
+        private readonly deleteUserTodo: DeleteUserTodoUseCase,
+        private readonly obtainOneTodo: ObtainOneTodoUseCase,
     ){}
 
     @Get()
@@ -79,6 +81,43 @@ export class TodosController {
 
     }
 
+    
+    @Get('/:id')
+    @ApiOperation({summary:'Obtém uma terefa de um usuário'})
+    @ApiOkResponse({
+        description:'Obteve a tarefa com sucesso',
+        type: TodoSwaggerResponseDto,
+        isArray:true
+    })
+    @ApiResponse({
+        status:404,
+        description:'Não encontrou a lista'
+    })
+    async oneTodo(@Param() params: CommonUuidQueryParam, @Req()request: Request){
+
+        const { id } = params;
+
+        try{
+
+            const todo = await this.obtainOneTodo.execute({
+                id,
+                userId: request.jwtDecode.id
+            });
+
+            return TodoToHttpMapper.toHttp(todo.todo);
+
+        
+        }catch(err){
+
+            if( err instanceof TodoNotFound ){
+
+                throw new TodoNotFoundExepction();
+            }
+
+        }
+
+    }
+    
     @Patch('/:id')
     @ApiOperation({summary:'Atualiza parcialmente uma tarefa'})
     @ApiOkResponse({
@@ -91,7 +130,7 @@ export class TodosController {
 
         const { id } = queryParams;
 
-        const { mustBeCompletedIn, description, priority, title } = body;
+        const { mustBeCompletedIn, description, priority, title, finishedIn } = body;
 
         try{
 
@@ -99,6 +138,7 @@ export class TodosController {
                 id,
                 userId: request.jwtDecode.id,
                 mustBeCompletedIn,
+                finishedIn,
                 description,
                 priority,
                 title
@@ -112,6 +152,16 @@ export class TodosController {
             if( err instanceof TodoNotFound ){
 
                 throw new TodoNotFoundExepction();
+            }
+
+            if( err instanceof Error ){
+
+                if( err.message === 'Invalid complete date'){
+
+                    throw new UnauthorizedException('A data referente a conclusão da tarefa é inválida\nPor favor, insira uma data maior ou igual a data atual');
+
+                }
+
             }
 
         }

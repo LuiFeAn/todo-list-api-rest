@@ -30,14 +30,14 @@ export class CreateTodoUseCase {
         }
 
         const todoList = new Todo({
-            title: new Title(title),
+            title: new Title(title.toUpperCase()),
             description: new Description(description),
             mustBeCompletedIn,
             priority,
             userId,
         })
 
-        if( mustBeCompletedIn <= todoList.createdAt ){
+        if( mustBeCompletedIn < todoList.createdAt ){
 
             throw new Error('Invalid complete date');
 

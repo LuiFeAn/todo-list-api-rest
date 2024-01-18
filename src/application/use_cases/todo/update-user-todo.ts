@@ -19,10 +19,17 @@ export class UpdateUserTodoUseCase {
             userId, 
             description, 
             mustBeCompletedIn, 
+            finishedIn,
             priority,
         title } = request;
 
         let currentTodo = await this.todosRepository.findTodo(id);
+
+        if( new Date(mustBeCompletedIn) < new Date(currentTodo.createdAt) ){
+
+            throw new Error('Invalid complete date');
+
+        }
 
         if( !currentTodo ){
 
@@ -44,7 +51,13 @@ export class UpdateUserTodoUseCase {
 
         if( mustBeCompletedIn ){
 
-            currentTodo.mustBeCompletedIn = mustBeCompletedIn;
+            currentTodo.mustBeCompletedIn = new Date(mustBeCompletedIn);
+
+        }
+
+        if( finishedIn ){
+
+            currentTodo.finishedIn = new Date(finishedIn);
 
         }
 
@@ -57,8 +70,8 @@ export class UpdateUserTodoUseCase {
         const updatedTodo = await this.todosRepository.update({
             userId,
             todoId: id,
-            body: currentTodo
-        });;
+            body: currentTodo,
+        });
 
         return {
             updatedTodo

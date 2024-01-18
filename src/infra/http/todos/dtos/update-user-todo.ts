@@ -24,4 +24,9 @@ export class UpdateUserTodoDTO {
     @ApiPropertyOptional()
     mustBeCompletedIn: Date
 
+    @IsOptional()
+    @IsISO8601()
+    @ApiPropertyOptional()
+    finishedIn: Date
+
 }
