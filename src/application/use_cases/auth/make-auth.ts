@@ -39,7 +39,8 @@ export class MakeAuthUseCase {
                 email: user.email.value,
             },
             options:{
-                expiresIn:'3h'
+                expiresIn:'3h',
+                secret: process.env.JWT_SECRET
             }
         });
 

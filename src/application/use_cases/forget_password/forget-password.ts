@@ -29,7 +29,8 @@ export class ForgetPasswordUseCase {
                 email,
             },
             options:{
-                expiresIn:'5m'
+                expiresIn:'5m',
+                secret: process.env.JWT_SECRET
             }
         });
 

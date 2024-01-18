@@ -9,7 +9,6 @@ import { RedefinePasswordModule } from './redefine_password/redefine-password.mo
 @Module({
   imports: [ JwtModule.register({
       global:true,
-      secret: process.env.JWT_SECRET,
   }),
   UsersModule,
   TodosModule,
