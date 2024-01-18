@@ -98,7 +98,7 @@ export class PrismaTodosRepository implements TodoRepository {
 
         return {
             title:{
-                contains: `${title}%`
+                contains: `%${title}%`
             }
         }
 
