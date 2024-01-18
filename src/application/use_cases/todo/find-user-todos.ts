@@ -40,7 +40,6 @@ export class FindUserTodosUseCase {
         }
 
         return {
-            allTodosCount,
             todoList: todosWithPagination,
             totalPages
         }
