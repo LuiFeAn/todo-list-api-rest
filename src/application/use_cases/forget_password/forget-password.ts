@@ -29,7 +29,7 @@ export class ForgetPasswordUseCase {
                 email,
             },
             options:{
-                expiresIn:'5m',
+                expiresIn:'10m',
                 secret: process.env.JWT_SECRET
             }
         });
