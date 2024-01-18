@@ -39,7 +39,7 @@ export class UpdateUserTodoUseCase {
 
         if( title ){
 
-            currentTodo.title = new Title(title);
+            currentTodo.title = new Title(title.toUpperCase());
 
         }
 
